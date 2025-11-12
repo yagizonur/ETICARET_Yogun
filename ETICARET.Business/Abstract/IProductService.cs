@@ -13,6 +13,7 @@ namespace ETICARET.Business.Abstract
 
         List<Product> GetProductByCategory(string category, int page, int pageSize);
 
+        List<Product> GetAll();
         Product GetProductDetails(int id);
 
         void Create(Product entity);

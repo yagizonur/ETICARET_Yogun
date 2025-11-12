@@ -1,4 +1,6 @@
-using ETICAREt.WebUI.Models;
+using ETICARET.Business.Abstract;
+using ETICARET.Entities;
+using ETICARET.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +8,24 @@ namespace ETICAREt.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _productService;
+
+        public HomeController(IProductService productService)
         {
-            _logger = logger;
+            _productService = productService;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var products = _productService.GetAll();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            if(products == null || !products.Any())
+            {
+                products = new List<Product>();
+            }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ProductListModel() { Products = products });
         }
     }
 }

@@ -1,3 +1,6 @@
+using ETICARET.WebUI.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace ETICAREt.WebUI
 {
     public class Program
@@ -8,6 +11,10 @@ namespace ETICAREt.WebUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
 
             var app = builder.Build();
 

@@ -28,6 +28,11 @@ namespace ETICARET.Business.Concrete
             _productDal.Delete(entity);
         }
 
+        public List<Product> GetAll()
+        {
+           return _productDal.GetAll();
+        }
+
         public Product GetById(int id)
         {
            return _productDal.GetById(id);
