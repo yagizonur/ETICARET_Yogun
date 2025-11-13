@@ -1,0 +1,109 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "Ürün Düzenle";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0"><i class="fas fa-edit"></i> Ürün Düzenle</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Name" class="form-label">Ürün Adı</label>
+                                    <input asp-for="Name" class="form-control">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label">Açıklama</label>
+                                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Price" class="form-label">Fiyat (TL)</label>
+                                    <input asp-for="Price" type="number" step="0.01" class="form-control">
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Kategoriler</label>
+                                    <div class="category-checkboxes">
+                                        @if (ViewBag.Categories != null)
+                                        {
+                                            @foreach (var category in ViewBag.Categories)
+                                            {
+                                                var isChecked = Model.SelectedCategories?.Any(c => c.Id == category.Id) ?? false;
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox"
+                                                           name="categoryIds"
+                                                           value="@category.Id"
+                                                           id="category_@category.Id"
+                                                           @(isChecked ? "checked" : "")>
+                                                    <label class="form-check-label" for="category_@category.Id">
+                                                        @category.Name
+                                                    </label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Yeni Resim Ekle</label>
+                                    <input type="file" name="files" class="form-control" multiple accept="image/*" id="fileInput">
+                                    <div id="imagePreview" class="mt-3 d-flex flex-wrap gap-2"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Mevcut Resimler</label>
+                                    <div class="existing-images">
+                                        @if (Model.Images != null && Model.Images.Any())
+                                        {
+                                            @foreach (var image in Model.Images)
+                                            {
+                                                <div class="image-item mb-2 position-relative">
+                                                    <img src="~/img/@image.ImageUrl"
+                                                         alt="@Model.Name"
+                                                         class="img-thumbnail w-100">
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p class="text-muted">Resim bulunmuyor</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                            <a asp-action="ProductList" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Geri Dön
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> Güncelle
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -116,11 +116,18 @@ namespace ETICARET.DataAccess.Concrete
             using (var context = new DataContext())
             {
                 return filter == null
-                    ? context.Products.Include("Images").ToList()
-                    : context.Products.Include("Images").Where(filter).ToList();
-
+                    ? context.Products
+                        .Include(p => p.Images)
+                        .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category)
+                        .ToList()
+                    : context.Products
+                        .Include(p => p.Images)
+                        .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category)
+                        .Where(filter)
+                        .ToList();
             }
-
         }
     }
 }
