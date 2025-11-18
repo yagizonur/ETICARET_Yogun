@@ -15,7 +15,7 @@ namespace ETICARET.DataAccess.Concrete
         {
             using (var context = new DataContext())
             {
-                var cmd = @"DELETE FROM CartItem WHERE CartId = @p0";
+                var cmd = "DELETE FROM CartItems WHERE CartId=@p0";
 
                 context.Database.ExecuteSqlRaw(cmd,cartId);
             }
@@ -25,7 +25,7 @@ namespace ETICARET.DataAccess.Concrete
         {
             using (var context = new DataContext())
             {
-                var cmd = @"DELETE FROM CartItem WHERE CartId = @p0 AND ProductId = @p1"; 
+                var cmd = "DELETE FROM CartItems WHERE CartId=@p0 AND ProductId=@p1"; 
             }
         }
 

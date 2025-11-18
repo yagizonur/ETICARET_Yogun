@@ -26,7 +26,7 @@ namespace ETICARET.Business.Concrete
             {
                 var index = cart.CartItems.FindIndex(i => i.ProductId == productId);
 
-                if(index > 0)
+                if(index < 0) // Eğer ürün sepette hiç yoksa sepete ürün ekle
                 {
                     cart.CartItems.Add(
                         new CartItem()
@@ -37,7 +37,7 @@ namespace ETICARET.Business.Concrete
                         });
                 }
 
-                else
+                else // Eğer ürün sepette varsa sepetteki ürünün sayısını arttır.
                 {
                     cart.CartItems[index].Quantity += quantity;
                 }

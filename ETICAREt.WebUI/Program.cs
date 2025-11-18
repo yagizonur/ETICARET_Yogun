@@ -93,21 +93,68 @@ namespace ETICAREt.WebUI
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "adminProducts",
-                pattern: "admin/products/{id?}",
-                defaults: new { controller = "Admin", action = "ProductList" }
-            );
 
-            app.MapControllerRoute(
-              name: "adminCategories",
-              pattern: "admin/categories/{id?}",
-              defaults: new { controller = "Admin", action = "CategoryList" }
-          );
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            #region Endpoints
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+
+                endpoints.MapControllerRoute(
+                    name: "products",
+                    pattern: "products/{category?}",
+                    defaults: new { controller = "Shop", action = "List" }
+                );
+                endpoints.MapControllerRoute(
+                    name: "adminProducts",
+                    pattern: "admin/products",
+                    defaults: new { controller = "Admin", action = "ProductList" }
+                );
+                endpoints.MapControllerRoute(
+                    name: "adminProducts",
+                    pattern: "admin/products/{id}",
+                    defaults: new { controller = "Admin", action = "EditProduct" }
+                );
+
+                endpoints.MapControllerRoute(
+                   name: "adminProducts",
+                   pattern: "admin/deleteproduct",
+                   defaults: new { controller = "Admin", action = "DeleteProduct" }
+               );
+
+                endpoints.MapControllerRoute(
+                    name: "adminCategory",
+                    pattern: "admin/category",
+                    defaults: new { controller = "Admin", action = "CategoryList" }
+                );
+                endpoints.MapControllerRoute(
+                    name: "adminCategory",
+                    pattern: "admin/categories/{id}",
+                    defaults: new { controller = "Admin", action = "EditCategory" }
+                );
+
+                endpoints.MapControllerRoute(
+                  name: "adminCategory",
+                  pattern: "admin/deletecategory",
+                  defaults: new { controller = "Admin", action = "DeleteCategory" }
+              );
+                endpoints.MapControllerRoute(
+                    name: "cart",
+                    pattern: "cart",
+                    defaults: new { controller = "Cart", action = "Index" }
+                );
+                endpoints.MapControllerRoute(
+                    name: "checkout",
+                    pattern: "checkout",
+                    defaults: new { controller = "Cart", action = "Checkout" }
+                );
+                endpoints.MapControllerRoute(
+                    name: "orders",
+                    pattern: "orders",
+                    defaults: new { controller = "Cart", action = "GetOrders" }
+                );
+            });
+            #endregion
 
             #region SeedDatabase
             SeedDatabase.Seed();

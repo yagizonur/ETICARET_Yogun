@@ -1,5 +1,6 @@
-﻿@using ETICARET.Entities
-@using System.Security.Claims
+﻿@using System.Security.Claims
+@using ETICARET.Entities
+
 @model List<Comment>
 
 @{
@@ -15,10 +16,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <input type="text" id="new_comment_text" class="form-control mb-2" placeholder="Yorumunuz..." />
+                <input type="text" id="new_comment_text" class="form-control mb-2" placeholder="Your Comments..." />
                 <span class="input-group-btn mt-2">
                     <button type="button" class="btn btn-success" onclick="doComment(this,'new_clicked',-1)">
-                        <span class="fas fa-share"></span>Submit
+                        <span class="fas fas-share"></span> Submit
                     </button>
                 </span>
             </div>
@@ -30,11 +31,11 @@
     @foreach (var comment in Model)
     {
         <div class="d-flex">
-            <div class="flex-grow-0-1 ms-1 mt-3">
+            <div class="flex-grow-1 ms-1 mt-3">
                 <h6 class="col-md-12">
                     <span>@(usernames.ContainsKey(comment.UserId) ? usernames[comment.UserId] : "Anonim")</span>
                     <small class="text-muted">
-                        <i>@comment.CreatedOn.ToString("ddd,dd MMM yyyyy")</i>
+                        <i>@comment.CreatedOn.ToString("ddd, dd MMMM yyyy")</i>
                     </small>
                 </h6>
                 <span class="col-md-10" id="comment_text_@comment.Id" contenteditable="false">
@@ -46,8 +47,7 @@
                         <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment(this,'edit_clicked',@comment.Id,'#comment_text_@comment.Id')">
                             <span class="fas fa-edit fa-xs"></span>
                         </button>
-
-                        <button type="button" class="btn btn-danger btn-xs" data-edit-mode="false" onclick="doComment(this,'delete_clicked',@comment.Id,'#comment_text_@comment.Id')">
+                        <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment(this,'delete_clicked',@comment.Id,'#comment_text_@comment.Id')">
                             <span class="fas fa-trash fa-xs"></span>
                         </button>
                     </span>
@@ -59,6 +59,6 @@
 else
 {
     <div class="alert alert-info mt-2">
-    Düşüncelerini Yaz
+        Düşüncelerini Yaz
     </div>
 }

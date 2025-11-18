@@ -1,0 +1,124 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ETICARET.WebUI.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-up">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-shopping-cart me-2"></i>ETİCARET
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" 
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")" 
+                       asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home me-1"></i>Ana Sayfa
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Shop" ? "active" : "")" 
+                       asp-controller="Shop" asp-action="List">
+                        <i class="fas fa-store me-1"></i>Ürünler
+                    </a>
+                </li>
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" 
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cog me-1"></i>Yönetim
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ProductList">
+                                        <i class="fas fa-box me-2"></i>Ürün Yönetimi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="CategoryList">
+                                        <i class="fas fa-tags me-2"></i>Kategori Yönetimi
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="CreateProduct">
+                                        <i class="fas fa-plus me-2"></i>Yeni Ürün
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="CreateCategory">
+                                        <i class="fas fa-folder-plus me-2"></i>Yeni Kategori
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Cart" ? "active" : "")" 
+                               asp-controller="Cart" asp-action="Index">
+                                <i class="fas fa-shopping-cart me-1"></i>Sepetim
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "GetOrders" ? "active" : "")" 
+                               asp-controller="Cart" asp-action="GetOrders">
+                                <i class="fas fa-box me-1"></i>Siparişlerim
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+            
+            <ul class="navbar-nav">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>@User.Identity.Name
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Manage">
+                                    <i class="fas fa-user-cog me-2"></i>Hesabım
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            <i class="fas fa-sign-in-alt me-1"></i>Giriş Yap
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">
+                            <i class="fas fa-user-plus me-1"></i>Üye Ol
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

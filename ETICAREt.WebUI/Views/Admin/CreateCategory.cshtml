@@ -1,40 +1,24 @@
 ﻿@model CategoryModel
+
 @{
-    ViewData["Title"] = "Yeni Kategori Ekle";
+    ViewData["Title"] = "CreateCategory";
 }
 
-<div class="container mt-4">
+
+<h1>Create Category</h1>
+<hr />
+<form asp-controller="Admin" asp-action="CreateCategory" method="post">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Yeni Kategori Ekle</h4>
-                </div>
-                <div class="card-body">
-                    <form asp-action="CreateCategory" method="post">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+        <div class="col-md-8">
+            <div class="mb-3 col-md-6 offset-md-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="CategoryName"/>
+                <span asp-validation-for="Name"></span>
+            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Name" class="form-label">Kategori Adı</label>
-                            <input asp-for="Name" class="form-control" placeholder="Kategori adını giriniz">
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a asp-action="CategoryList" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Geri Dön
-                            </a>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Kaydet
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            <div class="mb-3 col-md-6 offset-md-3">
+                <button type="submit" class="btn btn-primary">Save Category</button>
             </div>
         </div>
     </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+</form>

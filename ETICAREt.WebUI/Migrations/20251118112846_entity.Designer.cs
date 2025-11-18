@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETICARET.WebUI.Migrations
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    [Migration("20251112103443_identity")]
-    partial class identity
+    [Migration("20251118112846_entity")]
+    partial class entity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ETICARET.WebUI.Migrations
 {
     /// <inheritdoc />
-    public partial class identity : Migration
+    public partial class entity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
